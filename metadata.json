@@ -1,0 +1,6 @@
+{
+  "name": "Lumi IXL - Ontario Curriculum AI Learning & Diagnostic Platform",
+  "description": "Interactive Ontario curriculum learning platform for Math, Science, Language, and Social Studies featuring Rexy the real-time AI tutor, SmartScore mastery, and 3-way portals for students, parents, and technical admins.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

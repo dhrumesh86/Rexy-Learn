@@ -1,0 +1,46 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User account for student or parent with role and progress metrics",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "name": { "type": "string", "maxLength": 128 },
+        "role": { "type": "string", "enum": ["student", "parent", "admin"] },
+        "grade": { "type": "string", "maxLength": 10 },
+        "streakDays": { "type": "number" },
+        "totalQuestions": { "type": "number" },
+        "diagnosticScore": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "email", "name", "role"]
+    },
+    "PracticeRecord": {
+      "title": "PracticeRecord",
+      "description": "Log of question answered by a student in Ontario curriculum",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "skillId": { "type": "string", "maxLength": 64 },
+        "curriculumCode": { "type": "string", "maxLength": 32 },
+        "isCorrect": { "type": "boolean" },
+        "smartScore": { "type": "number" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["id", "userId", "skillId", "isCorrect"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Stores user account information and progress data"
+    },
+    "/users/{userId}/practiceRecords/{recordId}": {
+      "schema": "PracticeRecord",
+      "description": "Subcollection of practice question logs for a user"
+    }
+  }
+}
