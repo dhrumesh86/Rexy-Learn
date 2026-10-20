@@ -1,12 +1,12 @@
 {
-  "projectId": "named-setting-hc70r",
-  "appId": "1:1048249091719:web:93b182a845d3be700f5a22",
-  "apiKey": "AIzaSyA-W_eF8s8QMWUpQhgFW4IE_tB82tRcPuE",
-  "authDomain": "named-setting-hc70r.firebaseapp.com",
-  "firestoreDatabaseId": "ai-studio-lumiixlontariocu-5a131a7a-8467-496c-b580-bbb85343d92f",
-  "storageBucket": "named-setting-hc70r.firebasestorage.app",
-  "messagingSenderId": "1048249091719",
+  "projectId": "rexy-learn-fd58e",
+  "appId": "1:198214056035:web:c7649eb0d2895cd0aaa056",
+  "apiKey": "AIzaSyDJg2okjFH68_A0gSsTXPEyrKHPE-ffwV0",
+  "authDomain": "rexy-learn-fd58e.firebaseapp.com",
+  "firestoreDatabaseId": "(default)",
+  "storageBucket": "rexy-learn-fd58e.firebasestorage.app",
+  "messagingSenderId": "198214056035",
   "measurementId": "",
-  "oAuthClientId": "1048249091719-504q239nhvn70va4tm97srffru783eke.apps.googleusercontent.com",
+  "oAuthClientId": "",
   "recaptchaSiteKey": ""
 }

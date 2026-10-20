@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { DeviceView } from '../types/learning';
 import { Wifi, Battery, Signal, Tablet, Smartphone, Monitor } from 'lucide-react';
 
@@ -17,6 +17,17 @@ export const DeviceFrame: React.FC<Props> = ({
   onTabChange,
   onSwitchToDesktop,
 }) => {
+  const [isPhone, setIsPhone] = useState(() => window.matchMedia('(max-width: 640px)').matches);
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 640px)');
+    const update = () => setIsPhone(media.matches);
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
+  if (isPhone && (deviceView === 'iphone' || deviceView === 'android')) {
+    return <div className="w-full min-h-dvh">{children}</div>;
+  }
+
   if (deviceView === 'desktop') {
     return <div className="w-full min-h-screen">{children}</div>;
   }

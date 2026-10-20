@@ -1,3 +1,5 @@
+import { VOICE_CAPTURE_ENABLED } from '../lib/release';
+import { apiFetch } from '../lib/release';
 import React, { useState, useEffect } from 'react';
 import {
   Sparkles,
@@ -105,6 +107,7 @@ export const RexyOverviewDashboard: React.FC<Props> = ({
 
   // Toggle voice recognition
   const toggleListening = () => {
+    if (!VOICE_CAPTURE_ENABLED) { setMessages(prev => [...prev, { sender: 'rexy', text: 'Microphone capture is off in this preview. Type your answer instead.', time: 'Just now' }]); return; }
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
       alert('Speech recognition is not supported in this browser. You can type your answer below!');
       return;
@@ -145,7 +148,7 @@ export const RexyOverviewDashboard: React.FC<Props> = ({
 
     // Fetch AI response from Rexy server endpoint or fallback
     try {
-      const res = await fetch('/api/tutor/chat', {
+      const res = await apiFetch('/api/tutor/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

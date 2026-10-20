@@ -1,3 +1,4 @@
+import { apiFetch } from '../lib/release';
 import React, { useState, useEffect } from 'react';
 import {
   Activity,
@@ -52,7 +53,7 @@ export const AdminPortal: React.FC = () => {
   const fetchTelemetry = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch('/api/admin/telemetry');
+      const res = await apiFetch('/api/admin/telemetry');
       if (res.ok) {
         const data = await res.json();
         setTelemetry(data);
@@ -73,7 +74,7 @@ export const AdminPortal: React.FC = () => {
   const handleSimulateStudentActivity = async () => {
     setIsSimulating(true);
     try {
-      await fetch('/api/admin/simulate-activity', { method: 'POST' });
+      await apiFetch('/api/admin/simulate-activity', { method: 'POST' });
       await fetchTelemetry();
     } catch (e) {
       console.error('Simulation error:', e);

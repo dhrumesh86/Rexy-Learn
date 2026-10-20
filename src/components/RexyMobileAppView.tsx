@@ -1,3 +1,4 @@
+import { VOICE_CAPTURE_ENABLED } from '../lib/release';
 import React, { useState } from 'react';
 import {
   Bell,
@@ -73,6 +74,7 @@ export const RexyMobileAppView: React.FC<Props> = ({
   };
 
   const handleVoiceTap = () => {
+    if (!VOICE_CAPTURE_ENABLED) { setHint('Microphone capture is off in this preview. Tap the stars to explore the example.'); return; }
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
       const nextMsg = "High five! 5 + 3 = 8. Tap the stars to light them up!";
       setLiveMessages((prev) => [...prev, { sender: 'rexy', text: nextMsg }]);

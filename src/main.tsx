@@ -1,5 +1,13 @@
 import {createRoot} from 'react-dom/client';
-import App from './App.tsx';
+import App from './experience/RexyExperience.tsx';
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(<App />);
+
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {
+      console.info('App installation support is unavailable; the website still works.');
+    });
+  });
+}

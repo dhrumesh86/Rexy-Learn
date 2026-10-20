@@ -13,6 +13,11 @@ const app = express();
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 app.use(express.json({ limit: '10mb' }));
+// The first release has no reviewed live backend. Keep legacy demo routes closed,
+// including admin telemetry, even if an API key is present in the environment.
+app.use('/api', (_req, res) => {
+  res.status(503).json({ error: 'LIVE_SERVICES_DISABLED', message: 'Live services are not connected in this preview.' });
+});
 
 // Shared Gemini client with required User-Agent
 const geminiApiKey = process.env.GEMINI_API_KEY || '';

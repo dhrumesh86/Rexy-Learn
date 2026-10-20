@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { ReleaseNotice } from './components/ReleaseNotice';
 import { PortalRole, DeviceView, GradeLevel, SubjectId, CurriculumSkill, ChildProfile } from './types/learning';
 import { StreakData } from './types/classroom';
 import { ONTARIO_SKILLS, INITIAL_CHILD_PROFILES } from './data/ontarioCurriculum';
@@ -56,7 +57,7 @@ import {
 
 export default function App() {
   const [currentRole, setCurrentRole] = useState<PortalRole>('student');
-  const [deviceView, setDeviceView] = useState<DeviceView>('desktop');
+  const [deviceView, setDeviceView] = useState<DeviceView>(() => window.matchMedia('(max-width: 640px)').matches ? 'iphone' : 'desktop');
   const [sidebarTab, setSidebarTab] = useState<SidebarTab>('overview');
   const [activeSkill, setActiveSkill] = useState<CurriculumSkill | null>(null);
 
@@ -382,6 +383,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#f3f6fc] text-slate-900 font-['Plus_Jakarta_Sans',sans-serif]">
+      <ReleaseNotice />
       {/* Top Header & Simulation Controls */}
       <HeaderNavigation
         currentRole={currentRole}

@@ -1,3 +1,5 @@
+import { LIVE_SERVICES_ENABLED } from '../lib/release';
+import { apiFetch } from '../lib/release';
 import React, { useState, useRef } from 'react';
 import {
   Sparkles,
@@ -51,6 +53,14 @@ export const MultimodalHub: React.FC<Props> = ({ childName, grade }) => {
   const [isGeneratingMedia, setIsGeneratingMedia] = useState(false);
   const [musicNote, setMusicNote] = useState<string | null>(null);
 
+  if (!LIVE_SERVICES_ENABLED) {
+    return <section className="max-w-3xl mx-auto p-6 bg-white rounded-3xl border border-indigo-100 my-6">
+      <h2 className="text-2xl font-bold text-indigo-950">Rexy's Creative Studio</h2>
+      <p className="mt-3 text-slate-700">Live chat, search, maps, audio transcription, and image, music and video generation are planned features. They are not connected in this preview.</p>
+      <p className="mt-3 text-slate-700">Explore the plant experiment, stories and learning games using the navigation. This studio does not record or upload audio.</p>
+    </section>;
+  }
+
   // Multi-Turn Chat
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,7 +73,7 @@ export const MultimodalHub: React.FC<Props> = ({ childName, grade }) => {
     setIsChatLoading(true);
 
     try {
-      const res = await fetch('/api/gemini/chat', {
+      const res = await apiFetch('/api/gemini/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -94,7 +104,7 @@ export const MultimodalHub: React.FC<Props> = ({ childName, grade }) => {
     setGroundedResult(null);
 
     try {
-      const res = await fetch('/api/gemini/grounded-query', {
+      const res = await apiFetch('/api/gemini/grounded-query', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: groundedQuery, mode }),
@@ -126,7 +136,7 @@ export const MultimodalHub: React.FC<Props> = ({ childName, grade }) => {
         reader.onloadend = async () => {
           const base64Data = (reader.result as string).split(',')[1];
           // Send to transcription endpoint
-          const res = await fetch('/api/gemini/transcribe', {
+          const res = await apiFetch('/api/gemini/transcribe', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ audioBase64: base64Data, mimeType: 'audio/webm' }),
@@ -160,7 +170,7 @@ export const MultimodalHub: React.FC<Props> = ({ childName, grade }) => {
     if (!imagePrompt.trim() || isGeneratingMedia) return;
     setIsGeneratingMedia(true);
     try {
-      const res = await fetch('/api/gemini/generate-image', {
+      const res = await apiFetch('/api/gemini/generate-image', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: imagePrompt }),
@@ -181,7 +191,7 @@ export const MultimodalHub: React.FC<Props> = ({ childName, grade }) => {
   const handleGenerateMusic = async () => {
     setIsGeneratingMedia(true);
     try {
-      const res = await fetch('/api/gemini/generate-music', {
+      const res = await apiFetch('/api/gemini/generate-music', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: 'Grade 3 Math Victory Celebration' }),
