@@ -1,3 +1,4 @@
+import { apiFetch } from '../lib/release';
 import React, { useState, useEffect } from 'react';
 import { Volume2, VolumeX, Sparkles, MessageCircle, HelpCircle, Lightbulb, ChevronRight, RefreshCw, Wand2 } from 'lucide-react';
 import { RexyMascot } from './RexyMascot';
@@ -33,7 +34,7 @@ export const AITutorLumi: React.FC<Props> = ({ skill, currentQuestion, lastAnswe
     const fetchTutorGuidance = async () => {
       setIsLoadingAI(true);
       try {
-        const res = await fetch('/api/tutor/chat', {
+        const res = await apiFetch('/api/tutor/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -100,7 +101,7 @@ export const AITutorLumi: React.FC<Props> = ({ skill, currentQuestion, lastAnswe
     setIsLoadingAI(true);
 
     try {
-      const res = await fetch('/api/tutor/chat', {
+      const res = await apiFetch('/api/tutor/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

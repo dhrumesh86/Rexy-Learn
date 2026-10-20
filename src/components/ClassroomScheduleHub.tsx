@@ -1,3 +1,4 @@
+import { apiFetch } from '../lib/release';
 import React, { useState } from 'react';
 import {
   GoogleClassroomCourse,
@@ -120,7 +121,7 @@ export const ClassroomScheduleHub: React.FC<Props> = ({
     setIsLoadingLumi(true);
 
     try {
-      const res = await fetch('/api/tutor/chat', {
+      const res = await apiFetch('/api/tutor/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

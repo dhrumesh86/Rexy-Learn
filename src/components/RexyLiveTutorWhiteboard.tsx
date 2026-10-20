@@ -1,3 +1,5 @@
+import { VOICE_CAPTURE_ENABLED } from '../lib/release';
+import { apiFetch } from '../lib/release';
 import React, { useState, useRef, useEffect } from 'react';
 import {
   Mic,
@@ -78,6 +80,7 @@ export const RexyLiveTutorWhiteboard: React.FC<Props> = ({
 
   // Web Speech recognition
   const toggleListening = () => {
+    if (!VOICE_CAPTURE_ENABLED) { setHintMessage('Microphone capture is off in this preview. Type or draw your answer instead.'); return; }
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
       const msg = "Try breaking 12 into 10 + 2, then add the 6!";
       setMessages((prev) => [...prev, { sender: 'rexy', text: msg }]);
@@ -116,7 +119,7 @@ export const RexyLiveTutorWhiteboard: React.FC<Props> = ({
     setInputQuery('');
 
     try {
-      const res = await fetch('/api/tutor/chat', {
+      const res = await apiFetch('/api/tutor/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -138,7 +141,9 @@ export const RexyLiveTutorWhiteboard: React.FC<Props> = ({
         throw new Error('Local fallback');
       }
     } catch {
-      const reply = "Spot on! Look at the ten-frames: 10 + 8 = 18! High five, explorer!";
+      const reply = /\b18\b|\beighteen\b/i.test(text)
+        ? 'Yes! 12 + 6 = 18. We made ten, then added 2 + 6.'
+        : 'This practice example is 12 + 6. Split 12 into 10 and 2, then count 2 + 6. How many do you add to ten?';
       setMessages((prev) => [...prev, { sender: 'rexy', text: reply }]);
       speakRexy(reply);
     }
