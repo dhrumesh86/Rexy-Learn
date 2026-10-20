@@ -1,13 +1,13 @@
 # Rexy Learn
 
-A React/Vite learning prototype with an installable phone experience, prepared for Firebase Hosting on the existing `named-setting-hc70r` project.
+A React/Vite learning prototype with an installable phone experience, prepared for Firebase Hosting on the existing `rexy-learn` project.
 
 ## Current release
 
 - Authored activities, stories, whiteboards, plant simulation and games.
 - Sample profiles, reports, classroom data and admin screens. These are demonstrations, not live integrations or access-control boundaries.
 - Progress currently lives in React state and resets on reload. Cloud progress sync is a subsequent implementation.
-- Google sign-in code uses the existing Firebase web configuration; the provider and authorized domains must be verified in Firebase Console.
+- Google sign-in code uses the registered Rexy Learn Web application configuration. Authentication has been initialized; Google provider activation is pending confirmation of the public support email. Verify authorized domains after deployment.
 - Live AI, search/maps grounding, media generation, API telemetry and microphone capture are disabled. Adding an API key does not enable the legacy routes. Provider eligibility, authenticated backend design and usage controls must be reviewed before implementation.
 - Installable web app, not a native App Store or Play Store package. Offline mode displays a reconnect page; lessons are not cached for offline use.
 
@@ -24,9 +24,13 @@ npm run dev
 
 `npm run dev` starts the legacy Express/Vite development server. `npm run preview` serves the production frontend locally after building. API routes intentionally remain unavailable.
 
-## Publish without installing anything on your computer
+## Publish through ChatGPT
 
-Open [Google Cloud Shell](https://shell.cloud.google.com/?project=named-setting-hc70r) with the same Google account that can access Firebase. This is browser-based. If prompted to authorize Cloud Shell, review and complete Google's prompt yourself.
+Connect the official Firebase plugin to the Google account that owns `rexy-learn`. The deployment configuration publishes only static Hosting files. The plugin connection is separate from signing into the Firebase Console browser.
+
+## Alternative: publish from your browser
+
+Open [Google Cloud Shell](https://shell.cloud.google.com/?project=rexy-learn) with the same Google account that can access Firebase. This is browser-based. The original AI Studio Starter Tier project does not support Firebase Hosting; the separate `rexy-learn` project is on Spark. If prompted to authorize Cloud Shell, review and complete Google's prompt yourself.
 
 After this change is merged into `main`, run:
 
@@ -36,8 +40,7 @@ cd Rexy-Learn
 npm ci
 npm run typecheck
 npm run build
-npx firebase-tools login --no-localhost
-npx firebase-tools deploy --only hosting --project named-setting-hc70r
+npx firebase-tools deploy --only hosting --project rexy-learn
 ```
 
 If the directory already exists, use that checkout and `git pull --ff-only` instead of cloning again. Before merging, reviewers can use `git checkout codex/firebase-hosting-pwa` to build this branch. Check `node --version`; use Node 24 for reproducibility.
@@ -61,6 +64,6 @@ Stay on Spark for this static release. This repository does not request Function
 
 `firebase.json` serves `dist`, rewrites app navigation to `index.html`, and returns an explicit unavailable-service payload for `/api/**`. Microphone/camera/geolocation permissions are denied in Hosting response headers for this preview. Service worker caching is limited to the public offline page and icon; it never caches Firebase, API or account responses.
 
-Existing `firestore.rules` and the named database configuration are retained unchanged and are **not deployed** by the hosting command. Review rules and test owner isolation in the emulator before adding real family data. The existing role field is user-editable and must not grant admin privileges.
+Existing `firestore.rules` is retained unchanged and are **not deployed** by the hosting command. Review rules and test owner isolation in the emulator before adding real family data. The existing role field is user-editable and must not grant admin privileges.
 
 GitHub Actions runs typechecking and a production build and saves the static artifact. It does not publish or require Google credentials. Automated deployment can follow after authenticated project access is configured.

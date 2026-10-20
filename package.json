@@ -11,7 +11,7 @@
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
-    "deploy:hosting": "npm run build && npx firebase-tools deploy --only hosting --project named-setting-hc70r"
+    "deploy:hosting": "npm run build && npx --yes firebase-tools deploy --only hosting --project rexy-learn"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
