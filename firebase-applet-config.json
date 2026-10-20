@@ -1,11 +1,11 @@
 {
-  "projectId": "rexy-learn",
-  "appId": "1:504716166158:web:7e852f009dd8db2d5d685f",
-  "apiKey": "AIzaSyBybaK1zEsjWgdKvQxwKfxipE8wt6n9zJk",
-  "authDomain": "rexy-learn.firebaseapp.com",
+  "projectId": "rexy-learn-fd58e",
+  "appId": "1:198214056035:web:c7649eb0d2895cd0aaa056",
+  "apiKey": "AIzaSyDJg2okjFH68_A0gSsTXPEyrKHPE-ffwV0",
+  "authDomain": "rexy-learn-fd58e.firebaseapp.com",
   "firestoreDatabaseId": "(default)",
-  "storageBucket": "rexy-learn.firebasestorage.app",
-  "messagingSenderId": "504716166158",
+  "storageBucket": "rexy-learn-fd58e.firebasestorage.app",
+  "messagingSenderId": "198214056035",
   "measurementId": "",
   "oAuthClientId": "",
   "recaptchaSiteKey": ""

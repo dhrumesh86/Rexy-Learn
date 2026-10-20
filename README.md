@@ -1,6 +1,8 @@
 # Rexy Learn
 
-A React/Vite learning prototype with an installable phone experience, prepared for Firebase Hosting on the existing `rexy-learn` project.
+A React/Vite learning prototype with an installable phone experience, prepared for Firebase Hosting on the dedicated `rexy-learn-fd58e` project.
+
+The project has been restarted under the intended owner account. Previous Firebase projects are retained and are not deployment targets for this checkout.
 
 ## Current release
 
@@ -26,11 +28,11 @@ npm run dev
 
 ## Publish through ChatGPT
 
-Connect the official Firebase plugin to the Google account that owns `rexy-learn`. The deployment configuration publishes only static Hosting files. The plugin connection is separate from signing into the Firebase Console browser.
+Connect the official Firebase plugin to the Google account that owns `rexy-learn-fd58e`. The deployment configuration publishes only static Hosting files. The plugin connection is separate from signing into the Firebase Console browser.
 
 ## Alternative: publish from your browser
 
-Open [Google Cloud Shell](https://shell.cloud.google.com/?project=rexy-learn) with the same Google account that can access Firebase. This is browser-based. The original AI Studio Starter Tier project does not support Firebase Hosting; the separate `rexy-learn` project is on Spark. If prompted to authorize Cloud Shell, review and complete Google's prompt yourself.
+Open [Google Cloud Shell](https://shell.cloud.google.com/?project=rexy-learn-fd58e) with the same Google account that can access Firebase. This is browser-based. The original AI Studio Starter Tier project does not support Firebase Hosting; the separate `rexy-learn-fd58e` project is on Spark. If prompted to authorize Cloud Shell, review and complete Google's prompt yourself.
 
 After this change is merged into `main`, run:
 
@@ -40,7 +42,7 @@ cd Rexy-Learn
 npm ci
 npm run typecheck
 npm run build
-npx firebase-tools deploy --only hosting --project rexy-learn
+npx firebase-tools deploy --only hosting --project rexy-learn-fd58e
 ```
 
 If the directory already exists, use that checkout and `git pull --ff-only` instead of cloning again. Before merging, reviewers can use `git checkout codex/firebase-hosting-pwa` to build this branch. Check `node --version`; use Node 24 for reproducibility.
