@@ -1,71 +1,63 @@
 # Rexy Learn
 
-A React/Vite learning prototype with an installable phone experience, prepared for Firebase Hosting on the dedicated `rexy-learn-fd58e` project.
+An illustrated Grade 2 learning preview rebuilt around the four supplied Rexy Learn mockup boards. React, TypeScript and Vite; deployed as a static Firebase Hosting app.
 
-The project has been restarted under the intended owner account. Previous Firebase projects are retained and are not deployment targets for this checkout.
+## Experience
 
-## Current release
+- Navy navigation, blue headphone Rexy, cinematic dashboard, illustrated subject cards and a persistent practice tutor.
+- Floating-island learning map, interactive plant experiment, drawing whiteboard, eight-page Story Studio, Parent Insights, weekly planner, achievements and the existing 3D rover game.
+- Fifteen authored Grade 2 maths, reading and science questions with hints and explanations.
+- Practice badges, story endings and saved family plans persist in this browser. Parent charts, profiles and progress illustrations are clearly marked sample data.
+- Responsive phone layout and a desktop phone-preview toggle. Installable web app; not a native mobile-store package.
 
-- Authored activities, stories, whiteboards, plant simulation and games.
-- Sample profiles, reports, classroom data and admin screens. These are demonstrations, not live integrations or access-control boundaries.
-- Progress currently lives in React state and resets on reload. Cloud progress sync is a subsequent implementation.
-- Google sign-in code uses the registered Rexy Learn Web application configuration. Authentication has been initialized; Google provider activation is pending confirmation of the public support email. Verify authorized domains after deployment.
-- Live AI, search/maps grounding, media generation, API telemetry and microphone capture are disabled. Adding an API key does not enable the legacy routes. Provider eligibility, authenticated backend design and usage controls must be reviewed before implementation.
-- Installable web app, not a native App Store or Play Store package. Offline mode displays a reconnect page; lessons are not cached for offline use.
+Live AI, microphone/camera capture, account sign-in and cloud progress sync are not connected. Read-aloud uses browser speech synthesis where available. Planner reminders are preferences; they do not schedule push notifications. The plant experiment is a simplified teaching model. Only sample content is shown publicly.
 
-## Develop and validate
+## Develop and check
 
-Use Node 24 and npm (the committed npm lockfile is authoritative).
+Use Node 24 and the committed npm lockfile.
 
 ```sh
 npm ci
 npm run typecheck
+npm test
 npm run build
 npm run dev
 ```
 
-`npm run dev` starts the legacy Express/Vite development server. `npm run preview` serves the production frontend locally after building. API routes intentionally remain unavailable.
+`npm run preview` serves the production build locally. The optional 3D game loads separately. The legacy server/API files are retained, but API functionality is unavailable in this static release.
 
-## Publish through ChatGPT
+## Publish the current branch
 
-Connect the official Firebase plugin to the Google account that owns `rexy-learn-fd58e`. The deployment configuration publishes only static Hosting files. The plugin connection is separate from signing into the Firebase Console browser.
-
-## Alternative: publish from your browser
-
-Open [Google Cloud Shell](https://shell.cloud.google.com/?project=rexy-learn-fd58e) with the same Google account that can access Firebase. This is browser-based. The original AI Studio Starter Tier project does not support Firebase Hosting; the separate `rexy-learn-fd58e` project is on Spark. If prompted to authorize Cloud Shell, review and complete Google's prompt yourself.
-
-After this change is merged into `main`, run:
+The deployment branch is `codex/firebase-hosting-pwa`. For a fresh Cloud Shell checkout:
 
 ```sh
-git clone https://github.com/dhrumesh86/Rexy-Learn.git
-cd Rexy-Learn
+git clone --branch codex/firebase-hosting-pwa https://github.com/dhrumesh86/Rexy-Learn.git Rexy-Learn-publish
+cd Rexy-Learn-publish
 npm ci
-npm run typecheck
-npm run build
-npx firebase-tools deploy --only hosting --project rexy-learn-fd58e
+npm run deploy:hosting
 ```
 
-If the directory already exists, use that checkout and `git pull --ff-only` instead of cloning again. Before merging, reviewers can use `git checkout codex/firebase-hosting-pwa` to build this branch. Check `node --version`; use Node 24 for reproducibility.
+For the existing `Rexy-Learn-publish` checkout:
 
-The last command publishes the app to Firebase Hosting. It does not deploy Firestore rules, change the billing plan, create a database, or host `server.ts`. Use the exact Hosting URL returned by Firebase; do not assume that a URL is live before deployment succeeds. Hosting is publicly accessible; Firebase sign-in does not make the whole site private. Only sample content should appear in the frontend.
+```sh
+cd Rexy-Learn-publish
+git pull --ff-only
+npm ci
+npm run deploy:hosting
+```
 
-In Firebase Console, confirm **Build → Hosting** is available and review the project's existing Hosting site before publishing; this configuration targets the default site and deployment replaces its current release. If it already hosts another application, stop and configure a separate Hosting site/target first.
+Run these in [Google Cloud Shell](https://shell.cloud.google.com/?project=rexy-learn-fd58e), signed into the Google account that owns the Firebase project. The script builds and publishes only Hosting to `rexy-learn-fd58e`. Publishing replaces the default Hosting site's current release. Do not use this configuration for a different app's Hosting site.
 
-For Google sign-in, check **Authentication → Sign-in method → Google** and **Settings → Authorized domains**. Add the exact deployed hostname if absent. Sign-in alone does not implement cloud learner profiles or server-enforced parent/admin roles.
-
-Stay on Spark for this static release. This repository does not request Functions, Cloud Run, Storage uploads or a billing upgrade. A failure caused by project permissions must be resolved in your Google account; never put credentials or service-account JSON in this public repository or chat.
-
-## Phone installation
-
-- Android Chrome: open the deployed URL and choose **Install Rexy Learn**, or use the browser's Install app/Add to Home screen menu.
-- iPhone Safari: Share → Add to Home Screen.
-- Real phone widths open the phone interface without a simulated device shell. Desktop previews retain the device chooser.
-- Installation depends on the browser. Device verification is still required.
+GitHub Actions runs typechecking, lesson tests and the production build, then retains the build artifact. It does not deploy. Signing into Firebase Console does not authorize a local Firebase CLI session.
 
 ## Deployment boundaries
 
-`firebase.json` serves `dist`, rewrites app navigation to `index.html`, and returns an explicit unavailable-service payload for `/api/**`. Microphone/camera/geolocation permissions are denied in Hosting response headers for this preview. Service worker caching is limited to the public offline page and icon; it never caches Firebase, API or account responses.
+`firebase.json` serves `dist`, rewrites app navigation to `index.html`, and returns an unavailable-service payload for `/api/**`. Microphone, camera and geolocation capture are disabled by Hosting headers. The service worker caches only the public offline page and an icon; lessons are not available offline. This release does not change billing, create a database, or deploy existing Firestore rules.
 
-Existing `firestore.rules` is retained unchanged and are **not deployed** by the hosting command. Review rules and test owner isolation in the emulator before adding real family data. The existing role field is user-editable and must not grant admin privileges.
+The old Firebase integrations and rules remain in the repository for future work. They are not part of the new mounted experience. Review rules, authentication and owner isolation before implementing real family data or server-enforced parent/admin roles. Never commit credentials.
 
-GitHub Actions runs typechecking and a production build and saves the static artifact. It does not publish or require Google credentials. Automated deployment can follow after authenticated project access is configured.
+## Phone installation
+
+Android Chrome: use the browser's Install app/Add to Home screen menu. iPhone Safari: Share → Add to Home Screen. Real phones automatically use the narrow layout. Device-specific install and speech support still require testing.
+
+See [visual rebuild notes](docs/visual-rebuild.md) for artwork and validation details.

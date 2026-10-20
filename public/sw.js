@@ -1,5 +1,5 @@
 // Only public offline artwork is cached. Never store account, API or progress responses.
-const CACHE = 'rexy-offline-v1';
+const CACHE = 'rexy-offline-v3';
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(['/offline.html', '/icons/rexy-192.png'])));
 });
